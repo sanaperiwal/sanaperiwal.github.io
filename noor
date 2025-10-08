@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noor Candles & Co. - Scent Profile Mixer</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Define custom colors and configuration based on the logo provided */
+        :root {
+            --color-primary: #365D65; /* Deep Teal from Logo Background */
+            --color-accent: #D2A96D; /* Soft Gold from Logo Accent */
+            --color-text: #F7F4F0; /* Cream/Off-White */
+            --color-light-bg: #4A737D; /* Lighter shade for contrast */
+        }
+        
+        /* Tailwind Configuration */
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'var(--color-primary)',
+                        accent: 'var(--color-accent)',
+                        text: 'var(--color-text)',
+                        lightbg: 'var(--color-light-bg)',
+                    },
+                    boxShadow: {
+                        'gold-glow': '0 0 40px rgba(210, 169, 109, 0.8)',
+                    },
+                    animation: {
+                        'spin-slow': 'spin 3s linear infinite',
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: 0, transform: 'translateY(10px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+        
+        /* Custom styling for the range input (sliders) */
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            border: 2px solid var(--color-primary);
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: var(--color-accent);
+            cursor: pointer;
+            margin-top: -8px; 
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+        
+        input[type=range]::-moz-range-thumb {
+            border: 2px solid var(--color-primary);
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: var(--color-accent);
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: var(--color-light-bg);
+            border-radius: 3px;
+        }
+
+        input[type=range]::-moz-range-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: var(--color-light-bg);
+            border-radius: 3px;
+        }
+
+        /* CSS for the large, subtle background logo watermark */
+        body {
+            /* Set the original background color and add the logo image */
+            background-image: url('uploaded:PHOTO-2025-10-06-22-56-13.jpg-d2d1b751-e839-49fe-824e-9638506dfa21');
+            background-repeat: no-repeat;
+            background-position: center top 10%; 
+            background-size: 300px; 
+            background-attachment: fixed;
+            /* Filter to slightly fade the logo into the background */
+            filter: brightness(100%); 
+        }
+
+        /* Hide the large logo on small screens to prevent overlap with content */
+        @media (max-width: 640px) {
+            body {
+                background-image: none !important;
+            }
+        }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-primary min-h-screen text-text font-[Inter] p-4 sm:p-8">
+
+    <!-- Navigation -->
+    <header class="p-4 mb-8">
+        <nav class="flex justify-between items-center max-w-7xl mx-auto">
+            <div class="flex items-center space-x-3">
+                <!-- Logo Image in Nav (using the actual logo) -->
+                <img src="uploaded:PHOTO-2025-10-06-22-56-13.jpg-d2d1b751-e839-49fe-824e-9638506dfa21" 
+                     alt="Noor Candles & Co. Logo" 
+                     onerror="this.onerror=null; this.src='https://placehold.co/48x48/365D65/D2A96D?text=N';"
+                     class="w-12 h-12 rounded-full border-2 border-accent/70 shadow-lg object-cover bg-lightbg">
+                <div class="text-3xl font-bold text-accent tracking-wider">
+                    Noor Candles & Co.
+                </div>
+            </div>
+            <div class="space-x-8 hidden sm:flex">
+                <a href="#" class="text-text hover:text-accent transition duration-300">Shop</a>
+                <a href="#" class="text-text hover:text-accent transition duration-300">Our Story</a>
+                <a href="#" class="text-text hover:text-accent transition duration-300">Contact</a>
+            </div>
+            <button class="sm:hidden text-text text-xl">
+                <!-- Hamburger Icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Scent Profile Mixer Section -->
+    <main class="max-w-4xl mx-auto relative z-10"> <!-- Added relative z-10 to ensure content is above the background logo -->
+        <h1 class="text-5xl md:text-6xl font-extrabold text-text mb-4 text-center">
+            <span class="text-accent">Design</span> Your Signature Scent
+        </h1>
+        <p class="text-xl text-center mb-12 max-w-xl mx-auto text-gray-300">
+            Adjust the sliders to mix your perfect profile, and we'll name your custom creation.
+        </p>
+
+        <!-- Mixer Card -->
+        <div class="bg-lightbg p-6 sm:p-10 rounded-xl shadow-2xl border border-accent/30 mb-12">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Scent Controls -->
+                <div id="scent-controls">
+                    <h2 class="text-3xl font-bold text-accent mb-6">Scent Intensity</h2>
+                    
+                    <!-- 1. Floral Slider -->
+                    <div class="mb-6">
+                        <label for="floral" class="block text-lg font-medium mb-2">Floral & Fresh (e.g., Jasmine, Rose)</label>
+                        <input type="range" id="floral" min="0" max="100" value="50" class="w-full h-2 bg-primary rounded-lg appearance-none cursor-pointer">
+                        <div class="flex justify-between text-sm mt-1 text-gray-400"><span>Subtle</span><span>Dominant</span></div>
+                    </div>
+
+                    <!-- 2. Woodsy Slider -->
+                    <div class="mb-6">
+                        <label for="woodsy" class="block text-lg font-medium mb-2">Woodsy & Earthy (e.g., Sandalwood, Oud)</label>
+                        <input type="range" id="woodsy" min="0" max="100" value="50" class="w-full h-2 bg-primary rounded-lg appearance-none cursor-pointer">
+                        <div class="flex justify-between text-sm mt-1 text-gray-400"><span>Soft</span><span>Intense</span></div>
+                    </div>
+
+                    <!-- 3. Spice Slider -->
+                    <div class="mb-6">
+                        <label for="spice" class="block text-lg font-medium mb-2">Spice & Warmth (e.g., Cinnamon, Vanilla)</label>
+                        <input type="range" id="spice" min="0" max="100" value="50" class="w-full h-2 bg-primary rounded-lg appearance-none cursor-pointer">
+                        <div class="flex justify-between text-sm mt-1 text-gray-400"><span>Delicate</span><span>Fiery</span></div>
+                    </div>
+                    
+                    <!-- 4. Citrus Slider -->
+                    <div class="mb-6">
+                        <label for="citrus" class="block text-lg font-medium mb-2">Citrus & Bright (e.g., Bergamot, Lemon)</label>
+                        <input type="range" id="citrus" min="0" max="100" value="50" class="w-full h-2 bg-primary rounded-lg appearance-none cursor-pointer">
+                        <div class="flex justify-between text-sm mt-1 text-gray-400"><span>Muted</span><span>Vibrant</span></div>
+                    </div>
+
+                    <button onclick="generateScent()" id="generate-button"
+                        class="mt-4 w-full px-8 py-3 bg-accent text-primary text-xl font-semibold rounded-lg shadow-md hover:shadow-gold-glow transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50">
+                        Generate Candle Name
+                    </button>
+                </div>
+
+                <!-- Result Display -->
+                <div class="flex flex-col justify-center items-center p-6 bg-primary rounded-lg border-2 border-accent/50">
+                    <h2 class="text-3xl font-bold text-accent mb-4">Your Custom Creation</h2>
+                    
+                    <div id="result-display" class="w-full text-center min-h-[150px] flex flex-col justify-center items-center">
+                        <p class="text-gray-400 text-lg">Adjust the sliders and click 'Generate' to see your new scent!</p>
+                    </div>
+
+                    <!-- Loading Indicator (Hidden by default) -->
+                    <div id="loading-indicator" class="hidden flex flex-col items-center justify-center text-accent">
+                        <!-- Simple Spinner SVG Icon -->
+                        <svg class="animate-spin-slow h-8 w-8 mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <p>Naming your Noor scent...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-lightbg text-text py-12 mt-16 border-t border-accent/40 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+            <!-- Company Info -->
+            <div class="col-span-2 md:col-span-1">
+                <h3 class="text-xl font-bold text-accent mb-3">Noor Candles & Co.</h3>
+                <p class="text-sm text-gray-300">Illuminating Your World</p>
+            </div>
+
+            <!-- Navigation Links -->
+            <div>
+                <h3 class="text-lg font-semibold text-text mb-3">Quick Links</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-accent transition duration-300">Shop All</a></li>
+                    <li><a href="#" class="hover:text-accent transition duration-300">Our Story</a></li>
+                    <li><a href="#" class="hover:text-accent transition duration-300">Contact Us</a></li>
+                    <li><a href="#" class="hover:text-accent transition duration-300">FAQ</a></li>
+                </ul>
+            </div>
+
+            <!-- Social Media/Connect -->
+            <div>
+                <h3 class="text-lg font-semibold text-text mb-3">Connect</h3>
+                <ul class="space-y-2 text-sm">
+                    <li>
+                        <a href="https://www.instagram.com/noor.candles.and.co?igsh=YnNwYW5oN3c3aGdy&utm_source=qr" 
+                           target="_blank" 
+                           class="hover:text-accent transition duration-300 flex items-center space-x-2">
+                            <!-- Instagram Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                            <span>Instagram</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Newsletter Placeholder -->
+            <div class="col-span-2 md:col-span-1">
+                <h3 class="text-lg font-semibold text-text mb-3">Stay Updated</h3>
+                <p class="text-sm text-gray-300 mb-4">Subscribe for exclusive scents and offers.</p>
+                <!-- Simplified Form Placeholder -->
+                <form onsubmit="event.preventDefault(); console.log('Thanks for subscribing!');">
+                    <input type="email" placeholder="Your Email" class="w-full p-2 rounded text-primary focus:outline-none focus:ring-2 focus:ring-accent mb-2">
+                    <button type="submit" class="w-full bg-accent text-primary p-2 rounded hover:opacity-80 transition duration-300 font-semibold">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="mt-10 pt-6 border-t border-accent/20 text-center">
+            <p class="text-sm text-gray-400">&copy; 2025 Noor Candles & Co. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for LLM and Firestore Interactivity -->
+    <script type="module">
+        // --- FIREBASE IMPORTS ---
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // --- GLOBAL VARIABLES & INITIALIZATION ---
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let db = null;
+        let auth = null;
+        let currentUserId = null;
+        
+        // Firestore path for public, shared data
+        const CUSTOM_SCENTS_COLLECTION = `artifacts/${appId}/public/data/customScents`;
+
+        if (firebaseConfig) {
+            // Set Firestore log level for debugging
+            setLogLevel('Debug');
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+            
+            // Handle authentication
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    currentUserId = user.uid;
+                    console.log("Firebase initialized. User ID:", currentUserId);
+                } else {
+                    // Sign in anonymously if no token is available
+                    if (initialAuthToken) {
+                        signInWithCustomToken(auth, initialAuthToken).catch(e => {
+                            console.error("Error signing in with custom token:", e);
+                            signInAnonymously(auth).then(userCred => {
+                                currentUserId = userCred.user.uid;
+                                console.log("Signed in anonymously. User ID:", currentUserId);
+                            });
+                        });
+                    } else {
+                         signInAnonymously(auth).then(userCred => {
+                            currentUserId = userCred.user.uid;
+                            console.log("Signed in anonymously. User ID:", currentUserId);
+                        });
+                    }
+                }
+            });
+        } else {
+            console.error("Firebase config is missing. Database functionality is disabled.");
+        }
+
+
+        // --- API CONFIGURATION ---
+        const API_KEY = ""; // Canvas will provide this if empty
+        // FIX: Updated model ID to the recommended gemini-2.5-flash
+        const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + API_KEY;
+        const MAX_RETRIES = 5;
+
+        // --- UTILITY FUNCTIONS ---
+
+        /**
+         * Implements exponential backoff for retrying API calls.
+         * @param {Function} fn The function to execute (e.g., fetch call).
+         * @param {number} retries The number of retries remaining.
+         */
+        async function fetchWithBackoff(fn, retries = MAX_RETRIES) {
+            try {
+                return await fn();
+            } catch (error) {
+                if (retries === 0) {
+                    throw error;
+                }
+                const delay = Math.pow(2, MAX_RETRIES - retries) * 1000 + Math.random() * 1000;
+                await new Promise(resolve => setTimeout(resolve, delay));
+                return fetchWithBackoff(fn, retries - 1);
+            }
+        }
+
+        /**
+         * Renders the result to the UI.
+         * @param {object} result - Object containing scentName and description.
+         */
+        function renderResult(result) {
+            const display = document.getElementById('result-display');
+            display.innerHTML = `
+                <h3 class="text-4xl font-extrabold text-accent mb-3 animate-fade-in">${result.scentName}</h3>
+                <p class="text-lg text-text animate-fade-in">${result.description}</p>
+            `;
+        }
+
+        /**
+         * Saves the generated scent data and user inputs to Firestore.
+         * @param {object} scentData - The result from the LLM (name and description).
+         * @param {object} inputs - The user's slider input values.
+         */
+        async function saveScentToFirestore(scentData, inputs) {
+            if (!db || !currentUserId) {
+                console.warn("Firestore not ready or user not authenticated. Skipping save.");
+                return;
+            }
+
+            try {
+                const docRef = await addDoc(collection(db, CUSTOM_SCENTS_COLLECTION), {
+                    ...scentData, // scentName, description
+                    inputs: inputs, // floral, woodsy, spice, citrus percentages
+                    userId: currentUserId,
+                    timestamp: new Date()
+                });
+                console.log("Scent successfully saved to Firestore with ID: ", docRef.id);
+            } catch (e) {
+                console.error("Error adding document to Firestore: ", e);
+            }
+        }
+
+
+        // --- MAIN LOGIC ---
+
+        window.generateScent = async function() {
+            const button = document.getElementById('generate-button');
+            const loading = document.getElementById('loading-indicator');
+            const display = document.getElementById('result-display');
+
+            // 1. Get current scent values
+            const floral = document.getElementById('floral').value;
+            const woodsy = document.getElementById('woodsy').value;
+            const spice = document.getElementById('spice').value;
+            const citrus = document.getElementById('citrus').value;
+
+            const inputs = { floral, woodsy, spice, citrus };
+
+            const scentNotes = [
+                `Floral/Fresh: ${floral}%`,
+                `Woodsy/Earthy: ${woodsy}%`,
+                `Spice/Warmth: ${spice}%`,
+                `Citrus/Bright: ${citrus}%`
+            ].join(', ');
+
+            // 2. Set UI to loading state
+            button.disabled = true;
+            button.textContent = 'Generating...';
+            display.classList.add('hidden');
+            loading.classList.remove('hidden');
+
+            const systemPrompt = "You are a master perfumer and creative naming expert for a luxury candle company called 'Noor Candles & Co.'. Your goal is to generate a creative, elegant, and marketable name for a candle based on the user's chosen scent notes. The name must be evocative and the description must be short (1-2 sentences).";
+            const userQuery = `The user has selected the following scent notes: ${scentNotes}. Generate one unique, evocative candle name and a short description.`;
+            
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+                // Set structured output configuration
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "OBJECT",
+                        properties: {
+                            "scentName": { "type": "STRING", "description": "A poetic and elegant name for the candle." },
+                            "description": { "type": "STRING", "description": "A short, evocative description of the scent." }
+                        },
+                        "propertyOrdering": ["scentName", "description"]
+                    }
+                }
+            };
+
+            try {
+                const fetchFn = () => fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const response = await fetchWithBackoff(fetchFn);
+                
+                if (!response.ok) {
+                    throw new Error(`API response error: ${response.status}`);
+                }
+
+                const result = await response.json();
+                
+                const jsonText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (!jsonText) {
+                     throw new Error("Could not extract JSON content from API response.");
+                }
+
+                const scentData = JSON.parse(jsonText);
+                
+                if (scentData.scentName && scentData.description) {
+                    renderResult(scentData);
+                    // 3. SAVE TO FIRESTORE after successful generation
+                    await saveScentToFirestore(scentData, inputs);
+
+                } else {
+                    throw new Error("Invalid JSON structure returned by the model.");
+                }
+
+            } catch (error) {
+                console.error("Error generating scent name:", error);
+                const display = document.getElementById('result-display');
+                display.innerHTML = '<p class="text-red-400">Sorry, the scent generator is currently unavailable. Please try again later.</p>';
+                display.classList.remove('hidden');
+
+            } finally {
+                // 4. Reset UI
+                loading.classList.add('hidden');
+                display.classList.remove('hidden');
+                button.disabled = false;
+                button.textContent = 'Generate Candle Name';
+            }
+        }
+    </script>
+</body>
+</html>
